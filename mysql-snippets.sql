@@ -26,3 +26,5 @@ SELECT * FROM todos;
 /* show all collumns from table with unique id */
 SELECT * FROM todos WHERE id = 1;
 
+/* delete a line with specific id */
+DELETE FROM todos WHERE id = 1;
