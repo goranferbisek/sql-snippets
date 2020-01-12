@@ -11,6 +11,12 @@ CREATE TABLE todos (
 );
 
 
+/* ad a foreign key constraint to an existing table */
+ALTER TABLE comments
+ADD FOREIGN KEY (post_id) REFERENCES posts(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
 /* DESCRIBE todos; */
 
 /* delete a table */
