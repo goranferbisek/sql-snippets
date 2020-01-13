@@ -34,3 +34,31 @@ SELECT * FROM todos WHERE id = 1;
 
 /* delete a line with specific id */
 DELETE FROM todos WHERE id = 1;
+
+/*************** JOINS ***************/
+/* INNER JOIN - default in MySQL - keyword INNER not necessary */
+/* match on both tables */
+SELECT *
+FROM store
+JOIN address
+ON store.address_id = address.address_id;
+
+SELECT *
+FROM store
+INNER JOIN address
+ON store.address_id = address.address_id;
+
+/* LEFT JOIN and LEFT OUTER JOIN (same IN MySQL)
+  - get all records from store table even if there is no match */
+
+SELECT *
+FROM store
+LEFT JOIN address
+ON store.address_id = address.address_id;
+
+/* RIGHT JOIN or RIGHT OUTER JOIN
+ - get all records from address table even if there is no match */
+SELECT *
+FROM store
+RIGHT JOIN address
+ON store.address_id = address.address_id;
