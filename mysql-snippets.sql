@@ -74,3 +74,51 @@ FROM customer
 LEFT JOIN rental
 ON  rental.customer_id = customer.customer_id
 GROUP BY customer.customer_id; /* group by an unique id */
+
+/* SUBQUERY - subqueries come with a cost - cca 80ms */
+SELECT
+	c.customer_id,
+	c.first_name,
+	c.last_name,
+ 	COUNT(rental.rental_id) AS rentals_checked_out,
+	address.address AS store_address
+FROM customer AS c /*used alias for customer */
+LEFT JOIN rental
+ON  rental.customer_id = c.customer_id
+LEFT JOIN address
+ON address.address_id = (
+	SELECT address_id FROM store WHERE store.store_id = c.store_id
+) /* store.address_id */
+GROUP BY c.customer_id, address.address;
+
+/* upper query optimised with joins - cca 47ms*/
+SELECT
+	c.customer_id,
+	c.first_name,
+	c.last_name,
+ 	COUNT(rental.rental_id) AS rentals_checked_out,
+	address.address AS store_address
+FROM customer AS c
+LEFT JOIN rental
+ON  rental.customer_id = c.customer_id
+LEFT JOIN store
+ON store.store_id = c.store_id
+LEFT JOIN address
+ON address.address_id = store.address_id
+GROUP BY c.customer_id, address.address;
+
+/* popular rentals - most profitable */
+SELECT
+	title,
+    SUM(amount) AS sales,
+    COUNT(*) rentals
+FROM rental
+JOIN payment
+ON payment.rental_id = rental.rental_id
+JOIN inventory
+ON inventory.inventory_id = rental.inventory_id
+JOIN film
+ON film.film_id = inventory.film_id
+GROUP BY title
+HAVING sales > 200 /* HAVING is for aggregated columns */
+ORDER BY sales DESC;
