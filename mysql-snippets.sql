@@ -62,3 +62,15 @@ SELECT *
 FROM store
 RIGHT JOIN address
 ON store.address_id = address.address_id;
+
+/* AGGREGATE FUNCTIONS */
+SELECT
+	customer.customer_id,
+  customer.first_name,
+  customer.last_name,
+  COUNT(rental.rental_id) AS rentals_checked_out
+  /* column alias - AS not mandatory */
+FROM customer
+LEFT JOIN rental
+ON  rental.customer_id = customer.customer_id
+GROUP BY customer.customer_id; /* group by an unique id */
