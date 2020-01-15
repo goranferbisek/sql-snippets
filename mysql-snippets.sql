@@ -122,3 +122,14 @@ ON film.film_id = inventory.film_id
 GROUP BY title
 HAVING sales > 200 /* HAVING is for aggregated columns */
 ORDER BY sales DESC;
+
+/* RELATIONSHIPS */
+/* one to one*/
+
+
+/* one to many*/
+
+
+/* many to many
+   which actors star in each film
+   film_actor is a linking table */
