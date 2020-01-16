@@ -124,12 +124,44 @@ HAVING sales > 200 /* HAVING is for aggregated columns */
 ORDER BY sales DESC;
 
 /* RELATIONSHIPS */
-/* one to one*/
+/* one to one relationship
+   returns one row - one user has one profile
+   profile belongs to one user
+*/
+SELECT * FROM users
+JOIN profiles
+ON profiles.user_id = users.id;
 
 
-/* one to many*/
+/* one to many relationship
+   returns multiple rows
+   user has many blog posts, but a post has only one user
+*/
+SELECT
+	posts.id, title, body
+FROM posts
+JOIN users
+ON users.id = posts.user_id
+WHERE user_id = 1;
 
 
-/* many to many
-   which actors star in each film
-   film_actor is a linking table */
+/* many to many relationship
+   a post can have many tags
+   a tag can belong to many posts
+   post_tag is a linking table
+*/
+SELECT * FROM posts
+LEFT JOIN post_tag
+ON post_tag.post_id = posts.id
+WHERE post_tag.post_id = 200;
+
+/* prevent duplication  - post_id and tag_ud combination must be unique
+   in the linking table post_tag
+*/
+CREATE TABLE post_tag (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  post_id INT UNSIGNED NOT NULL,
+  tag_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE (post_id, tag_id) /* UNIQUE KEYWORD */
+);
