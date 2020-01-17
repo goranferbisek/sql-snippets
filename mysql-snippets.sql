@@ -165,3 +165,9 @@ CREATE TABLE post_tag (
   PRIMARY KEY (id),
   UNIQUE (post_id, tag_id) /* UNIQUE KEYWORD */
 );
+
+/* INDEX */
+/* EXPLAIN keyword in front of a query is useful for finding index type
+   and how much row does it have to search to find a result
+*/
+EXPLAIN SELECT * FROM rental;
