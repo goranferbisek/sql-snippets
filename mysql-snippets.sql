@@ -174,3 +174,27 @@ EXPLAIN SELECT * FROM rental;
 
 CREATE INDEX index_name
 ON table_name (column1, column2, ...);
+
+
+/* EXERCISES */
+/* ten most popular writers */
+SELECT users.id, users.name, count(*) AS readers
+FROM users
+LEFT JOIN post_reads
+ON post_reads.post_id IN (
+    SELECT id FROM posts WHERE user_id = users.id
+)
+GROUP BY users.id
+ORDER BY readers DESC
+LIMIT 10;
+
+/* average number of rentals per day */
+SELECT round(avg(total_rentals)) AS average_rentals
+FROM (
+	SELECT
+	date(rental_date) AS day,
+    count(*) as total_rentals
+	FROM rental
+	GROUP BY day
+	ORDER BY day DESC
+) rentals;
