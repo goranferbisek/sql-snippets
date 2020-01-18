@@ -171,3 +171,6 @@ CREATE TABLE post_tag (
    and how much row does it have to search to find a result
 */
 EXPLAIN SELECT * FROM rental;
+
+CREATE INDEX index_name
+ON table_name (column1, column2, ...);
